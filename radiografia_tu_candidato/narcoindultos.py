@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-# coding=utf8
+# -*- coding: utf-8 -*-
 import codecs
 import json
 import os.path
 import re
+import unicodedata
 
 import argparse
 from argparse import RawTextHelpFormatter
@@ -24,7 +25,7 @@ def parse_names(names):
         out = name.last + ", "
         out += name.first + " "
         out += name.middle
-        names[i] = out
+        names[i] = out.strip()
         i += 1
     return names
 
@@ -32,7 +33,14 @@ def parse_names(names):
 def extract_alias(line, next_line):
     line = line.strip() + " " + next_line.strip()
     line = re.sub("\s+", " ", line)
-    line = line.split(" o ")
+    divisor = u" ó "
+    if divisor in line:
+        line = line.split(u" ó ")
+        print line
+    elif ' o ' in line:
+        line = line.split(" o ")
+    else:
+        line = [line]
     names = []
     for i in line:
         # pattern for a person's name
@@ -96,7 +104,7 @@ def extract_conmutados(filename):
 def extract_indultados(filename):
     individuals = []
     if os.path.isfile(filename):
-        with codecs.open(filename, "r", "utf8") as f:
+        with codecs.open(filename, "r", "latin-1") as f:
             for line in f:
                 names = False
                 if 'conceder indult' in line.lower():
