@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # coding=utf8
 import codecs
 import os.path
@@ -18,14 +19,14 @@ def convert_to_minjus_url(filename):
 def extract_conmutados(filename):
     individuals = []
     # pattern for a person's name
-    pattern = "([A-Z]+\s+[A-Z]+,\s[A-Z]+\s*[A-Z]*\s*[A-Z]*)"
+    pattern = "(\w{2,}\s+\w{2,}\s*,\s*\w{2,}\s+\w*\s*)"
     if os.path.isfile(filename):
         with codecs.open(filename, "r", "utf8") as f:
             for line in f:
                 if 'conmutarle' in line.lower():
-                    res = re.search(pattern, line.strip())
+                    res = re.search(pattern, line.strip(), re.UNICODE)
                     if res:
-                        name = res.groups()[0]
+                        name = res.groups()[0].strip()
 
                         # crear nuestro individuo
                         obj = {'nombre': name}
