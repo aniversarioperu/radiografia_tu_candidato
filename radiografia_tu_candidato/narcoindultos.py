@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf8
 import codecs
+import json
 import os.path
 import re
 
@@ -10,6 +11,17 @@ from argparse import RawTextHelpFormatter
 
 def extract_alias(line, next_line):
     line = line.strip() + " " + next_line.strip()
+    line = line.split(" o ")
+    names = []
+    for i in line:
+        # pattern for a person's name
+        pattern = "((\w{2,}\s*)+,(\s*\w{2,})+)"
+        res = re.search(pattern, i.strip(), re.UNICODE)
+        if res:
+            name = res.groups()[0].strip()
+            names.append(name)
+    return names
+
 
 def has_alias(line):
     if ' o ' in line:
@@ -33,23 +45,24 @@ def extract_conmutados(filename):
     if os.path.isfile(filename):
         with codecs.open(filename, "r", "utf8") as f:
             for line in f:
-                if has_alias(line) is True:
-                    extract_alias(line, f.next())
+                names = False
+                if has_alias(line) is True and 'conmutarle' in line.lower():
+                    names = extract_alias(line, f.next())
                     # jump one line because it contains our person's alias
                     f.next()
-                    continue
+                    # continue
                 else:
                     if 'conmutarle' in line.lower():
                         res = re.search(pattern, line.strip(), re.UNICODE)
                         if res:
-                            name = res.groups()[0].strip()
+                            names = [res.groups()[0].strip()]
 
-                            # crear nuestro individuo
-                            obj = {'nombre': name}
-                            obj['categoria'] = "conmutado"
-                            obj['url'] = convert_to_minjus_url(filename)
-                            individuals.append(obj)
-                print line
+                if names:
+                    # crear nuestro individuo
+                    obj = {'nombres': names}
+                    obj['categoria'] = "conmutado"
+                    obj['url'] = convert_to_minjus_url(filename)
+                    individuals.append(obj)
         return individuals
 
 
@@ -70,7 +83,7 @@ def main():
 
     args = parser.parse_args()
     if args.filename:
-        print extract_conmutados(args.filename.strip())
+        print json.dumps(extract_conmutados(args.filename.strip()), indent=4)
 
 
 if __name__ == "__main__":

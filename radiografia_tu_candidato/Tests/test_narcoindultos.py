@@ -33,7 +33,7 @@ class NarcoindultosTest(unittest.TestCase):
             obj = dict()
             obj['categoria'] = 'conmutado'
             obj['url'] = 'http://spij.minjus.gob.pe/Normas/textos/010509T.pdf'
-            obj['nombre'] = name
+            obj['nombres'] = [name]
             i += 1
             self.assertEqual(result, obj)
 
@@ -52,10 +52,8 @@ class NarcoindultosTest(unittest.TestCase):
         self.assertFalse(result)
 
     def test_extract_alias(self):
-        line = "7. CANALES PASTOR, MAICOL o PEREZ SALAS, RICARDO, conmutarle de"
+        line = "7. CANALES PASTOR, MAICOL o PEREZ SALAS, RICARDO, conmutarle d"
         next_line = "04 años de pena privativa de libertad; la que vencerá el"
+        expected_result = ["CANALES PASTOR, MAICOL", "PEREZ SALAS, RICARDO"]
         result = extract_alias(line, next_line)
-        self.assertEqual(result['alias'], "PEREZ SALAS, RICARDO")
-
-
-
+        self.assertEqual(result, expected_result)
