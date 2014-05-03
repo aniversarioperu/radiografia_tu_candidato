@@ -5,8 +5,6 @@ import unittest
 import sys
 sys.path.append("../..")
 
-import nameparser
-
 from radiografia_tu_candidato.narcoindultos import extract_conmutados
 from radiografia_tu_candidato.narcoindultos import extract_indultados
 from radiografia_tu_candidato.narcoindultos import convert_to_minjus_url
@@ -86,7 +84,7 @@ class NarcoindultosTest(unittest.TestCase):
 
     def test_extract_indultados(self):
         expected_names = [
-            [u'LUCIA MARTINEZ BARRIOS'],
+            [u'BARRIOS, LUCIA MARTINEZ'],
             [
                 u'PINTO LLANOS, MARIELLA SOFIA',
                 u'PINTO LLANOS, MARIELA SOFIA',
@@ -106,5 +104,5 @@ class NarcoindultosTest(unittest.TestCase):
     def test_parse_names(self):
         names = ["LUCIA MARTINEZ BARRIOS",]
         result = parse_names(names)
-        self.assertEqual(result, "LUCIA MARTINEZ BARRIOS")
+        self.assertEqual(result, ["BARRIOS, LUCIA MARTINEZ"])
 

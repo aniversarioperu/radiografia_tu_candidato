@@ -18,7 +18,7 @@ def parse_names(names):
             if x[0].isupper() and not x[1].islower():
                 out += x + " "
         item = re.sub(",\s*$", "", out)
-        print item
+        item = re.sub("INDULTO POR RAZONES HUMANITARIAS\s*", "", item)
 
         name = HumanName(item)
         out = name.last + ", "
