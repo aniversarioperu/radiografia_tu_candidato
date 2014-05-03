@@ -25,4 +25,5 @@ class NarcoindultosTest(unittest.TestCase):
 
     def test_convert_to_minjus_url(self):
         result = convert_to_minjus_url(self.filename)
-        self.assertEqual(result, 'http://spij.minjus.gob.pe/Normas/textos/010509T.pdf')
+        result_goal = 'http://spij.minjus.gob.pe/Normas/textos/010509T.pdf'
+        self.assertEqual(result, result_goal)
