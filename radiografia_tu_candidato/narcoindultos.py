@@ -11,6 +11,8 @@ from argparse import RawTextHelpFormatter
 
 def extract_alias(line, next_line):
     line = line.strip() + " " + next_line.strip()
+    print line
+    line = re.sub("\s+", " ", line)
     line = line.split(" o ")
     names = []
     for i in line:
@@ -46,11 +48,14 @@ def extract_conmutados(filename):
         with codecs.open(filename, "r", "utf8") as f:
             for line in f:
                 names = False
-                if has_alias(line) is True and 'conmutarle' in line.lower():
-                    names = extract_alias(line, f.next())
-                    # jump one line because it contains our person's alias
-                    f.next()
-                    # continue
+                if has_alias(line) is True:
+                    next_line = f.next()
+                    if 'conmutarle' in line.lower() or \
+                            'conmutarle' in next_line.lower():
+                        try:
+                            names = extract_alias(line, next_line)
+                        except StopIteration:
+                            pass
                 else:
                     if 'conmutarle' in line.lower():
                         res = re.search(pattern, line.strip(), re.UNICODE)
@@ -63,6 +68,7 @@ def extract_conmutados(filename):
                     obj['categoria'] = "conmutado"
                     obj['url'] = convert_to_minjus_url(filename)
                     individuals.append(obj)
+
         return individuals
 
 
