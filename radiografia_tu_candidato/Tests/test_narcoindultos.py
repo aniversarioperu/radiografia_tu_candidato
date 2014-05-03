@@ -5,7 +5,7 @@ import unittest
 import sys
 sys.path.append("../..")
 
-from radiografia_tu_candidato.narcoindultos import extraer_conmutados
+from radiografia_tu_candidato.narcoindultos import extract_conmutados
 from radiografia_tu_candidato.narcoindultos import convert_to_minjus_url
 
 
@@ -15,7 +15,7 @@ class NarcoindultosTest(unittest.TestCase):
         self.filename = os.path.join("Narcoindultos", "01-05-09.txt")
 
     def test_extraer_conmutados(self):
-        result = extraer_conmutados(self.filename)[0]
+        result = extract_conmutados(self.filename)[0]
         obj = {
                 'nombre': 'ALZAMORA CARDOZO, VICTOR MARTIN',
                 'categoria': 'conmutado',

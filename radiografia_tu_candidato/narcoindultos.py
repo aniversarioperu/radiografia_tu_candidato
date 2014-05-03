@@ -14,8 +14,9 @@ def convert_to_minjus_url(filename):
     url = "http://spij.minjus.gob.pe/Normas/textos/" + filename
     return url
 
-def extraer_conmutados(filename):
-    individuos = []
+def extract_conmutados(filename):
+    individuals = []
+    # pattern for a person's name
     pattern = "([A-Z]+\s+[A-Z]+,\s[A-Z]+\s*[A-Z]*\s*[A-Z]*)"
     if os.path.isfile(filename):
         with codecs.open(filename, "r", "utf8") as f:
@@ -23,14 +24,14 @@ def extraer_conmutados(filename):
                 if 'conmutarle' in line.lower():
                     res = re.search(pattern, line.strip())
                     if res:
-                        nombre = res.groups()[0]
+                        name = res.groups()[0]
 
                         # crear nuestro individuo
-                        obj = {'nombre': nombre}
+                        obj = {'nombre': name}
                         obj['categoria'] = "conmutado"
                         obj['url'] = convert_to_minjus_url(filename)
-                        individuos.append(obj)
-        return individuos
+                        individuals.append(obj)
+        return individuals
 
 
 def main():
@@ -48,7 +49,7 @@ def main():
 
     args = parser.parse_args()
     if args.filename:
-        print extraer_conmutados(args.filename.strip())
+        print extract_conmutados(args.filename.strip())
 
 
 if __name__ == "__main__":
