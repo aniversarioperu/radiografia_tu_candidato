@@ -1,5 +1,4 @@
-SE RESUELVE: ESTABLECIMIENTO PENITENCIARIO DE LURIGANCHO
-
+# Conmutados de pena
 0. ALZAMORA CARDOZO, VICTOR MARTIN, conmutarle de 05 años a 03 años 03
 meses de pena privativa de libertad; la que vencerá el 25 de julio de 2009.
 1. NUÑEZ VILCHEZ, JOSE SAMUEL, conmutarle
@@ -20,3 +19,11 @@ pena privativa de libertad; la que vencerá el 09 de marzo de 2011.
 PASTOR, MAICOL RICARDO3A, conmutarle de 06 años a 04 años de pena privativa de
 9. CANALES PASTOR, MAICOL RICARDO1B o CANALES PASTOR, MAICOL RICARDO2B o
 CANALES PASTOR, MAICOL RICARDO3B, conmutarle de 06 años a 04 años de pena privativa de
+
+# Indultados
+10. Conceder INDULTO POR RAZONES HUMANITARIAS a, LUCIA MARTINEZ
+BARRIOS, quien se encuentra interna en el Establecimiento Penitenciario de Mujeres Chor
+11. Conceder INDULTO POR RAZONES HUMANITARIAS a la interna PINTO
+LLANOS, MARIELLA SOFIA ó PINTO LLANOS, MARIELA SOFIA, quien se encuentra recluida en
+12. Conceder INDULTO POR RAZONES HUMANITARIAS al interno CHAPARRO
+JURADO, CARLOS, quien se encuentra recluido en el Establecimiento Penitenciario de

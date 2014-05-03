@@ -5,10 +5,14 @@ import unittest
 import sys
 sys.path.append("../..")
 
+import nameparser
+
 from radiografia_tu_candidato.narcoindultos import extract_conmutados
+from radiografia_tu_candidato.narcoindultos import extract_indultados
 from radiografia_tu_candidato.narcoindultos import convert_to_minjus_url
 from radiografia_tu_candidato.narcoindultos import has_alias
 from radiografia_tu_candidato.narcoindultos import extract_alias
+from radiografia_tu_candidato.narcoindultos import parse_names
 
 
 class NarcoindultosTest(unittest.TestCase):
@@ -79,3 +83,28 @@ class NarcoindultosTest(unittest.TestCase):
         ]
         result = extract_alias(line, next_line)
         self.assertEqual(result, expected_result)
+
+    def test_extract_indultados(self):
+        expected_names = [
+            [u'LUCIA MARTINEZ BARRIOS'],
+            [
+                u'PINTO LLANOS, MARIELLA SOFIA',
+                u'PINTO LLANOS, MARIELA SOFIA',
+            ],
+            [u'CHAPARRO JURADO, CARLOS'],
+        ]
+        i = 0
+        for name in expected_names:
+            result = extract_indultados(self.filename)[i]
+            obj = dict()
+            obj['categoria'] = 'indultado'
+            obj['url'] = 'http://spij.minjus.gob.pe/Normas/textos/010509T.pdf'
+            obj['nombres'] = name
+            i += 1
+            self.assertEqual(result, obj)
+
+    def test_parse_names(self):
+        names = ["LUCIA MARTINEZ BARRIOS",]
+        result = parse_names(names)
+        self.assertEqual(result, "LUCIA MARTINEZ BARRIOS")
+
