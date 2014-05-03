@@ -17,13 +17,12 @@ class NarcoindultosTest(unittest.TestCase):
     def test_extraer_conmutados(self):
         result = extract_conmutados(self.filename)[0]
         obj = {
-                'nombre': 'ALZAMORA CARDOZO, VICTOR MARTIN',
-                'categoria': 'conmutado',
-                'url': 'http://spij.minjus.gob.pe/Normas/textos/010509T.pdf',
-                }
+            'nombre': 'ALZAMORA CARDOZO, VICTOR MARTIN',
+            'categoria': 'conmutado',
+            'url': 'http://spij.minjus.gob.pe/Normas/textos/010509T.pdf',
+        }
         self.assertEqual(result, obj)
 
     def test_convert_to_minjus_url(self):
         result = convert_to_minjus_url(self.filename)
         self.assertEqual(result, 'http://spij.minjus.gob.pe/Normas/textos/010509T.pdf')
-

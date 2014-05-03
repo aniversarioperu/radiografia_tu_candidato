@@ -14,6 +14,7 @@ def convert_to_minjus_url(filename):
     url = "http://spij.minjus.gob.pe/Normas/textos/" + filename
     return url
 
+
 def extract_conmutados(filename):
     individuals = []
     # pattern for a person's name
@@ -39,13 +40,15 @@ def main():
     jurídicas emitidas durante el 2do gobierno aprista."""
 
     parser = argparse.ArgumentParser(
-            description=description,
-            formatter_class=RawTextHelpFormatter,
-            )
-    parser.add_argument('-f', '--filename', action='store',
-            metavar='01-01-08.txt',
-            help='Norma Jurídica en formato TXT',
-            required=True, dest='filename')
+        description=description,
+        formatter_class=RawTextHelpFormatter,
+    )
+    parser.add_argument(
+        '-f', '--filename', action='store',
+        metavar='01-01-08.txt',
+        help='Norma Jurídica en formato TXT',
+        required=True, dest='filename',
+    )
 
     args = parser.parse_args()
     if args.filename:
