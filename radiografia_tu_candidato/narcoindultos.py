@@ -19,7 +19,7 @@ def convert_to_minjus_url(filename):
 def extract_conmutados(filename):
     individuals = []
     # pattern for a person's name
-    pattern = "(\w{2,}\s+\w{2,}\s*,\s*\w{2,}\s+\w*\s*)"
+    pattern = "((\w{2,}\s*)+,(\s*\w{2,})+)"
     if os.path.isfile(filename):
         with codecs.open(filename, "r", "utf8") as f:
             for line in f:
