@@ -8,6 +8,16 @@ import argparse
 from argparse import RawTextHelpFormatter
 
 
+def extract_alias(line, next_line):
+    line = line.strip() + " " + next_line.strip()
+
+def has_alias(line):
+    if ' o ' in line:
+        return True
+    else:
+        return False
+
+
 def convert_to_minjus_url(filename):
     filename = os.path.basename(filename)
     filename = filename.replace("-", "")
@@ -23,16 +33,23 @@ def extract_conmutados(filename):
     if os.path.isfile(filename):
         with codecs.open(filename, "r", "utf8") as f:
             for line in f:
-                if 'conmutarle' in line.lower():
-                    res = re.search(pattern, line.strip(), re.UNICODE)
-                    if res:
-                        name = res.groups()[0].strip()
+                if has_alias(line) is True:
+                    extract_alias(line, f.next())
+                    # jump one line because it contains our person's alias
+                    f.next()
+                    continue
+                else:
+                    if 'conmutarle' in line.lower():
+                        res = re.search(pattern, line.strip(), re.UNICODE)
+                        if res:
+                            name = res.groups()[0].strip()
 
-                        # crear nuestro individuo
-                        obj = {'nombre': name}
-                        obj['categoria'] = "conmutado"
-                        obj['url'] = convert_to_minjus_url(filename)
-                        individuals.append(obj)
+                            # crear nuestro individuo
+                            obj = {'nombre': name}
+                            obj['categoria'] = "conmutado"
+                            obj['url'] = convert_to_minjus_url(filename)
+                            individuals.append(obj)
+                print line
         return individuals
 
 
