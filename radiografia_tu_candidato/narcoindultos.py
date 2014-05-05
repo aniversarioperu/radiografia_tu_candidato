@@ -33,10 +33,8 @@ def parse_names(names):
 def extract_alias(line, next_line):
     line = line.strip() + " " + next_line.strip()
     line = re.sub("\s+", " ", line)
-    divisor = u" ó "
-    if divisor in line:
-        line = line.split(u" ó ")
-        print line
+    if u' ó ' in line:
+        line = line.split(u' ó ')
     elif ' o ' in line:
         line = line.split(" o ")
     else:
@@ -74,7 +72,7 @@ def extract_conmutados(filename):
     # pattern for a person's name
     pattern = "((\w{2,}\s*){2,},(\s*\w{2,})+)"
     if os.path.isfile(filename):
-        with codecs.open(filename, "r", "utf8") as f:
+        with codecs.open(filename, "r", "utf-8") as f:
             for line in f:
                 names = False
                 if has_alias(line) is True:
@@ -104,7 +102,7 @@ def extract_conmutados(filename):
 def extract_indultados(filename):
     individuals = []
     if os.path.isfile(filename):
-        with codecs.open(filename, "r", "latin-1") as f:
+        with codecs.open(filename, "r", encoding="utf-8") as f:
             for line in f:
                 names = False
                 if 'conceder indult' in line.lower():

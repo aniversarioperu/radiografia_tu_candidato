@@ -1,4 +1,5 @@
-# coding: utf8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import os
 import unittest
@@ -64,16 +65,22 @@ class NarcoindultosTest(unittest.TestCase):
         result = has_alias(line)
         self.assertFalse(result)
 
-    def test_extract_alias(self):
+    def test_extract_alias1(self):
         line = "7. CANALES PASTOR, MAICOL o PEREZ SALAS, RICARDO, conmutarle d"
         next_line = "04 años de pena privativa de libertad; la que vencerá el"
+
+        line = line.decode("utf-8")
+        next_line = next_line.decode("utf-8")
         expected_result = ["CANALES PASTOR, MAICOL", "PEREZ SALAS, RICARDO"]
         result = extract_alias(line, next_line)
         self.assertEqual(result, expected_result)
 
-    def test_extract_alias(self):
+    def test_extract_alias2(self):
         line = "8. CANA PAST, MAI RICARDO1 o CANA PAST, MAI RICARDO2 o CANA"
         next_line = "PAST, MAI RICARDO3, conmutarle de 06 años a 04 años de"
+
+        line = line.decode("utf-8")
+        next_line = next_line.decode("utf-8")
         expected_result = [
             "CANA PAST, MAI RICARDO1",
             "CANA PAST, MAI RICARDO2",
@@ -102,7 +109,11 @@ class NarcoindultosTest(unittest.TestCase):
             self.assertEqual(result, obj)
 
     def test_parse_names(self):
-        names = ["LUCIA MARTINEZ BARRIOS",]
+        names = ["LUCIA MARTINEZ BARRIOS", ]
         result = parse_names(names)
         self.assertEqual(result, ["BARRIOS, LUCIA MARTINEZ"])
 
+
+if __name__ == "__main__":
+    runner = unittest.TextTestRunner(verbosity=2)
+    unittest.main(testRunner=runner)
