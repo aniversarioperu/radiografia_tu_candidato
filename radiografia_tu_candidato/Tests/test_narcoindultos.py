@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from codecs import decode
 import os
 import unittest
 import sys
@@ -69,8 +70,16 @@ class NarcoindultosTest(unittest.TestCase):
         line = "7. CANALES PASTOR, MAICOL o PEREZ SALAS, RICARDO, conmutarle d"
         next_line = "04 años de pena privativa de libertad; la que vencerá el"
 
-        line = line.decode("utf-8")
-        next_line = next_line.decode("utf-8")
+        try:
+            line = line.decode("utf-8")
+        except:
+            pass
+
+        try:
+            next_line = next_line.decode("utf-8")
+        except:
+            pass
+
         expected_result = ["CANALES PASTOR, MAICOL", "PEREZ SALAS, RICARDO"]
         result = extract_alias(line, next_line)
         self.assertEqual(result, expected_result)
@@ -79,8 +88,16 @@ class NarcoindultosTest(unittest.TestCase):
         line = "8. CANA PAST, MAI RICARDO1 o CANA PAST, MAI RICARDO2 o CANA"
         next_line = "PAST, MAI RICARDO3, conmutarle de 06 años a 04 años de"
 
-        line = line.decode("utf-8")
-        next_line = next_line.decode("utf-8")
+        try:
+            line = line.decode("utf-8")
+        except:
+            pass
+
+        try:
+            next_line = next_line.decode("utf-8")
+        except:
+            pass
+
         expected_result = [
             "CANA PAST, MAI RICARDO1",
             "CANA PAST, MAI RICARDO2",

@@ -76,7 +76,7 @@ def extract_conmutados(filename):
             for line in f:
                 names = False
                 if has_alias(line) is True:
-                    next_line = f.next()
+                    next_line = f.readline()
                     if 'conmutarle' in line.lower() or \
                             'conmutarle' in next_line.lower():
                         try:
@@ -107,7 +107,7 @@ def extract_indultados(filename):
                 names = False
                 if 'conceder indult' in line.lower():
                     try:
-                        next_line = f.next()
+                        next_line = f.readline()
                         names = extract_alias(line, next_line)
                         names = parse_names(names)
                         if names is False:
