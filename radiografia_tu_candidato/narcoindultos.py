@@ -149,7 +149,7 @@ def main():
     args = parser.parse_args()
     if args.filename:
         # print json.dumps(extract_conmutados(args.filename.strip()), indent=4)
-        print json.dumps(extract_indultados(args.filename.strip()), indent=4)
+        print(json.dumps(extract_indultados(args.filename.strip()), indent=4))
 
 
 if __name__ == "__main__":
