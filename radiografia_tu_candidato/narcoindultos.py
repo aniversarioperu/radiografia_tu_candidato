@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import codecs
+import glob
 import json
 import os.path
 import re
+import sys
 import unicodedata
 
 import argparse
@@ -143,14 +145,31 @@ def main():
         '-f', '--filename', action='store',
         metavar='01-01-08.txt',
         help='Norma Jurídica en formato TXT',
-        required=True, dest='filename',
+        required=False, dest='filename',
     )
+    parser.add_argument(
+        '-d', '--directory', action='store',
+        metavar='myfolder/',
+        help='Folder contenindo Normas Jurídicas en formato TXT',
+        required=False, dest='directory',
+    )
+
+    objects = []
 
     args = parser.parse_args()
     if args.filename:
         # print json.dumps(extract_conmutados(args.filename.strip()), indent=4)
         print(json.dumps(extract_indultados(args.filename.strip()), indent=4))
+    elif args.directory:
+        for filename in glob.glob(os.path.join(args.directory, "*txt")):
+            objects += extract_indultados(filename)
+            objects += extract_conmutados(filename)
+    else:
+        parser.print_help()
+        sys.exit()
 
+    with codecs.open("narcoindultados.json", "w", "utf-8") as handle:
+        handle.write(json.dumps(objects, indent=4))
 
 if __name__ == "__main__":
     main()
