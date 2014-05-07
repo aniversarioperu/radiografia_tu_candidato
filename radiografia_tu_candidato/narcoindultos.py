@@ -129,8 +129,9 @@ def extract_indultados(filename):
                     obj['categoria'] = "indultado"
                     obj['url'] = convert_to_minjus_url(filename)
                     individuals.append(obj)
-
         return individuals
+    else:
+        print("Error, cant open that file")
 
 
 def main():
@@ -154,7 +155,11 @@ def main():
         required=False, dest='directory',
     )
 
-    objects = []
+    output_file = "narcoindultados.json"
+    if os.path.isfile(output_file):
+        os.remove(output_file)
+
+    f = codecs.open(output_file, "a", "utf-8")
 
     args = parser.parse_args()
     if args.filename:
@@ -162,14 +167,15 @@ def main():
         print(json.dumps(extract_indultados(args.filename.strip()), indent=4))
     elif args.directory:
         for filename in glob.glob(os.path.join(args.directory, "*txt")):
-            objects += extract_indultados(filename)
-            objects += extract_conmutados(filename)
+            output = extract_conmutados(filename)
+            if len(output) > 0:
+                for item in output:
+                    f.write(json.dumps(item) + "\n")
     else:
         parser.print_help()
-        sys.exit()
 
-    with codecs.open("narcoindultados.json", "w", "utf-8") as handle:
-        handle.write(json.dumps(objects, indent=4))
+    f.close()
+    sys.exit()
 
 if __name__ == "__main__":
     main()
