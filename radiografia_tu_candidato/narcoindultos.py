@@ -69,15 +69,27 @@ def convert_to_minjus_url(filename):
     return url
 
 
-def extract_conmutados(filename):
-    individuals = []
+def extract_indultados(filename):
     # pattern for a person's name
     pattern = "((\w{2,}\s*){2,},(\s*\w{2,})+)"
+    individuals = []
     if os.path.isfile(filename):
-        with codecs.open(filename, "r", "utf-8") as f:
+        with codecs.open(filename, "r", encoding="utf-8") as f:
             for line in f:
                 names = False
-                if has_alias(line) is True:
+                if 'conceder indult' in line.lower():
+                    try:
+                        next_line = f.readline()
+                        names = extract_alias(line, next_line)
+                        names = parse_names(names)
+                        if names is False:
+                            res = re.search(pattern, line.strip(), re.UNICODE)
+                            if res:
+                                names = [res.groups()[0].strip()]
+                                names = parse_names(names)
+                    except StopIteration:
+                        pass
+                elif has_alias(line) is True:
                     next_line = f.readline()
                     if 'conmutarle' in line.lower() or \
                             'conmutarle' in next_line.lower():
@@ -91,37 +103,6 @@ def extract_conmutados(filename):
                         if res:
                             names = [res.groups()[0].strip()]
 
-                if names:
-                    # crear nuestro individuo
-                    obj = {'nombres': names}
-                    obj['categoria'] = "conmutado"
-                    obj['url'] = convert_to_minjus_url(filename)
-                    individuals.append(obj)
-
-        return individuals
-
-
-def extract_indultados(filename):
-    individuals = []
-    if os.path.isfile(filename):
-        with codecs.open(filename, "r", encoding="utf-8") as f:
-            for line in f:
-                names = False
-                if 'conceder indult' in line.lower():
-                    try:
-                        next_line = f.readline()
-                        names = extract_alias(line, next_line)
-                        names = parse_names(names)
-                        if names is False:
-                            # pattern for a person's name
-                            pattern = "((\w{2,}\s*){2,},(\s*\w{2,})+)"
-                            res = re.search(pattern, line.strip(), re.UNICODE)
-                            if res:
-                                names = [res.groups()[0].strip()]
-                                names = parse_names(names)
-
-                    except StopIteration:
-                        pass
 
                 if names:
                     # crear nuestro individuo

@@ -7,7 +7,6 @@ import unittest
 import sys
 sys.path.append("../..")
 
-from radiografia_tu_candidato.narcoindultos import extract_conmutados
 from radiografia_tu_candidato.narcoindultos import extract_indultados
 from radiografia_tu_candidato.narcoindultos import convert_to_minjus_url
 from radiografia_tu_candidato.narcoindultos import has_alias
@@ -20,37 +19,6 @@ class NarcoindultosTest(unittest.TestCase):
     # extraer nombres de indultados de normas jurídicas
     def setUp(self):
         self.filename = os.path.join("Narcoindultos", "01-05-09.txt")
-
-    def test_extract_conmutados(self):
-        expected_names = [
-            [u'ALZAMORA CARDOZO, VICTOR MARTIN'],
-            [u'NUÑEZ VILCHEZ, JOSE SAMUEL'],
-            [u'DEL PUERTO TARAZONA, FRANCISCO'],
-            [u'DE LA PUERTA TARAZONA, FRANCISCO'],
-            [u'DE LA PUERTA TARAZONA, FRANCISCO MIGUEL'],
-            [u'DE LA PUERTA TARAZONA, FRANCISCO MIGUEL ALONSO'],
-            [u'DE LA PUERTA TARAZONA,FRANCISCO MIGUEL ALONSO'],
-            [u'CANALES PASTOR, MAICOL', u'PEREZ SALAS, RICARDO'],
-            [
-                u'CANALES PASTOR, MAICOL RICARDO1A',
-                u'CANALES PASTOR, MAICOL RICARDO2A',
-                u'CANALES PASTOR, MAICOL RICARDO3A',
-            ],
-            [
-                u'CANALES PASTOR, MAICOL RICARDO1B',
-                u'CANALES PASTOR, MAICOL RICARDO2B',
-                u'CANALES PASTOR, MAICOL RICARDO3B',
-            ],
-        ]
-        i = 0
-        for name in expected_names:
-            result = extract_conmutados(self.filename)[i]
-            obj = dict()
-            obj['categoria'] = 'conmutado'
-            obj['url'] = 'http://spij.minjus.gob.pe/Normas/textos/010509T.pdf'
-            obj['nombres'] = name
-            i += 1
-            self.assertEqual(result, obj)
 
     def test_convert_to_minjus_url(self):
         result = convert_to_minjus_url(self.filename)
@@ -108,6 +76,24 @@ class NarcoindultosTest(unittest.TestCase):
 
     def test_extract_indultados(self):
         expected_names = [
+            [u'ALZAMORA CARDOZO, VICTOR MARTIN'],
+            [u'NUÑEZ VILCHEZ, JOSE SAMUEL'],
+            [u'DEL PUERTO TARAZONA, FRANCISCO'],
+            [u'DE LA PUERTA TARAZONA, FRANCISCO'],
+            [u'DE LA PUERTA TARAZONA, FRANCISCO MIGUEL'],
+            [u'DE LA PUERTA TARAZONA, FRANCISCO MIGUEL ALONSO'],
+            [u'DE LA PUERTA TARAZONA,FRANCISCO MIGUEL ALONSO'],
+            [u'CANALES PASTOR, MAICOL', u'PEREZ SALAS, RICARDO'],
+            [
+                u'CANALES PASTOR, MAICOL RICARDO1A',
+                u'CANALES PASTOR, MAICOL RICARDO2A',
+                u'CANALES PASTOR, MAICOL RICARDO3A',
+            ],
+            [
+                u'CANALES PASTOR, MAICOL RICARDO1B',
+                u'CANALES PASTOR, MAICOL RICARDO2B',
+                u'CANALES PASTOR, MAICOL RICARDO3B',
+            ],
             [u'BARRIOS, LUCIA MARTINEZ'],
             [
                 u'PINTO LLANOS, MARIELLA SOFIA',
